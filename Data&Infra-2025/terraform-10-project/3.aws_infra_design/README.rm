@@ -1,0 +1,94 @@
+## Requirements:
+- Collect JSON data from devices and store it in S3
+- Process data hourly using Glue or Lambda
+- Store processed data in Redshift or a data lake (Athena/Glue Catalog)
+- Create an RDS database to store app metadata
+- Deploy a secure VPC with private/public subnets
+- Make the design modular and repeatable using Terraform
+
+## Your Tasks:
+1. Describe how you would organize your Terraform project (e.g., VPC, IAM, S3, Glue, RDS).
+2. List IAM roles/policies needed and their permissions.
+3. Explain why you'd choose Redshift vs Athena for queries.
+4. Sketch a simple architecture diagram (on paper/whiteboard).
+5. Identify where you'd use modules, variables, and outputs.
+
+
+1. How I’d Organize the Terraform Project
+-----------------------------------------
+I'd follow a modular, environment-aware Terraform setup structured like this:
+
+terraform/
+├── main.tf
+├── variables.tf
+├── outputs.tf
+├── backend.tf
+├── modules/
+│   ├── vpc/
+│   ├── iam/
+│   ├── s3/
+│   ├── glue/
+│   ├── rds/
+│   ├── redshift/
+│   └── athena/
+└── environments/
+    ├── dev/
+    └── prod/
+
+Modules: reusable across environments
+Environments: separate state/config for dev vs prod using workspaces or folders.
+
+
+2. IAM Roles/Policies Needed
+----------------------------
+- Glue Role: S3 read/write, Glue access
+- Lambda Execution Role: S3 read, DynamoDB/Glue write, CloudWatch logs
+- Redshift Role: S3 read (COPY), CloudWatch
+- RDS Access Role: For app EC2s or Lambdas
+- Athena Role: Glue Catalog, S3 read/write
+
+Security Tips:
+- KMS encryption for buckets/logs
+- VPC endpoints for S3, Glue, RDS
+- Secrets in AWS Secrets Manager
+
+3. Redshift vs Athena for Querying
+----------------------------------
+Redshift:
+- Optimized for large analytics workloads
+- Better for dashboards, heavy joins
+- Pay for cluster uptime
+
+Athena:
+- Ad hoc query engine
+- Pay-per-query
+- Reads from S3 directly
+
+Recommendation:
+- Use Athena for hourly JSON processing
+- Use Redshift for aggregated queries and BI
+
+4. Architecture Design
+----------------------
+IoT Devices → S3 (raw)
+→ Glue Job / Lambda → S3 (cleaned)
+→ Athena / Redshift for querying
+→ RDS for application metadata
+
+Use VPC endpoints for secure service communication and isolate workloads into private/public subnets.
+
+5. Terraform Modules, Variables, Outputs
+----------------------------------------
+Modules:
+- vpc, iam, s3, glue, rds, redshift, athena
+
+Variables:
+- cidr_blocks, subnet_lists, job_name, db_user, bucket_names
+
+Outputs:
+- vpc_id, subnet_ids, glue_job_name, s3_bucket_arn, db_endpoint
+
+This approach supports reusable infrastructure, CI/CD, and separate environments.
+
+
+

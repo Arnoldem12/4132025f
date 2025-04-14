@@ -1,0 +1,183 @@
+# AWS Terraform modules https://github.com/orgs/terraform-aws-modules/repositories
+
+Terraform  knowledge:
+Terraform Quiz Summary
+1. What is the purpose of the `terraform state` command?
+Answer: Inspect and manage Terraform state
+
+2. How can you define multiple providers in a Terraform configuration?
+Answer: Use provider aliases
+
+3. Which argument is required in every resource block?
+Answer: resource type and name
+
+4. How does Terraform handle dependencies between resources?
+Answer: Terraform automatically infers dependencies from resource references
+
+5. Which interpolation is correct for referencing an output value from another module?
+Answer: module.module_name.output_name
+
+6. Which of the following best describes Terraform’s remote backend?
+Answer: It stores the Terraform state file remotely for collaboration
+
+7. What does the `terraform import` command do?
+Answer: Import existing infrastructure into Terraform state
+
+8. How does Terraform manage provider versions?
+Answer: Provider versions are specified in the provider block
+
+9. What does the `terraform init` command do? (Additional context for completeness)
+Answer: Initializes a Terraform working directory
+
+10. What does the `terraform apply` command do? (Additional context for completeness)
+Answer: Applies the changes required to reach the desired state of the configuration
+
+
+Q: How do you manage Terraform in teams?
+A: Use remote backends (like S3 with DynamoDB lock), break infra into modules, version your state and config in Git.
+
+Q: Difference between count and for_each?
+A: count is for indexed resources, for_each is for named items (map or set).
+
+Beginner Level
+--------------
+1.What is Terraform and what problem does it solve?
+    A: Terraform is an open-source Infrastructure as Code (IaC) tool created by HashiCorp. It allows users to define and provision infrastructure resources using a declarative configuration language called HashiCorp Configuration Language (HCL).
+        The main problems Terraform solves are:
+        -Infrastructure provisioning across multiple cloud providers with a single consistent workflow
+        -Version control for infrastructure
+        -Automated deployment that reduces human error
+        -Creating reproducible infrastructure
+        -Managing complex dependencies between resources
+2.Explain the difference between Terraform and other IaC tools like CloudFormation or Ansible.
+
+3.What are providers in Terraform? Give examples.
+4.Explain the basic Terraform workflow (init, plan, apply, destroy).
+
+5.What file extensions does Terraform use and what are they for? 
+    A: Terraform uses several file extensions:
+        .tf - Contains the main Terraform configuration code written in HCL
+        .tfvars - Used to define variable values
+        .tfstate - Stores the state of the infrastructure
+        .tfstate.backup - Backup of the previous state file
+        .tf.json - JSON format of Terraform configuration (less common)
+        .tfplan - Binary file created when you run terraform plan -out=filename
+
+6.What is state in Terraform and why is it important?
+7.What's the difference between terraform apply and terraform plan?
+
+Intermediate Level
+------------------
+1.How would you manage Terraform state in a team environment?
+    A: In a team environment, I would manage Terraform state by:
+    -Using a remote backend like S3 with DynamoDB for state locking to prevent concurrent modifications
+    -Setting up proper access controls to the state backend
+    -Separating state files by environment or component to limit the blast radius
+    -Using workspaces for environment isolation when appropriate
+    -Implementing CI/CD pipelines that handle state operations
+    -Setting up automated state backups
+    -Establishing a process for handling state conflicts
+    -Avoiding manual state manipulation except in emergency situations
+Example:
+terraform {
+  backend "s3" {
+    bucket         = "company-terraform-state"
+    key            = "prod/network/terraform.tfstate"
+    region         = "us-west-2"
+    dynamodb_table = "terraform-locks"
+    encrypt        = true
+  }
+}
+
+Explain the purpose of remote state and state locking.
+What are modules in Terraform and why would you use them?
+How do you handle secrets in Terraform?
+Explain what a data source is and when you would use one.
+
+6.What's the difference between count and for_each?
+    A: Both count and for_each allow you to create multiple instances of a resource, but they work differently:
+    -   count creates multiple identical resources based on a number.
+        The main drawback is that if you remove an item from the middle of the list, 
+        resources get recreated because Terraform identifies them by their index.
+                    resource "aws_instance" "server" {
+                        count = 3
+                        ami   = "ami-0c55b159cbfafe1f0"
+                        instance_type = "t2.micro"
+                        tags = {
+                            Name = "Server-${count.index}"
+                        }
+                    }
+    -  for_each creates resources from a map or set of strings, 
+        identifying resources by unique keys. This avoids the reordering problem of count.
+                    resource "aws_instance" "server" {
+                        for_each = {
+                            web = "t2.micro"
+                            app = "t2.small"
+                            db  = "t2.medium"
+                        }
+                        ami           = "ami-0c55b159cbfafe1f0"
+                        instance_type = each.value
+                        tags = {
+                            Name = "Server-${each.key}"
+                        }
+                    }
+
+How would you import existing infrastructure into Terraform?
+What are workspaces and when would you use them?
+
+Advanced Level
+--------------
+How would you implement a CI/CD pipeline for Terraform?
+Explain how you would handle drift detection and remediation.
+3.How would you organize Terraform code for multiple environments (dev, staging, prod)?
+    A: There are several approaches I've used for organizing Terraform code across environments:
+
+        -Directory Structure Approach: This provides clear separation but can lead to code duplication.
+            a.Separate directories for each environment with environment-specific .tfvars files
+            b.Common modules directory shared across environments
+        
+            terraform/
+            ├── modules/
+            │   ├── networking/
+            │   ├── compute/
+            │   └── database/
+            ├── dev/
+            │   ├── main.tf
+            │   └── dev.tfvars
+            ├── staging/
+            │   ├── main.tf
+            │   └── staging.tfvars
+            └── prod/
+                ├── main.tf
+                └── prod.tfvars
+
+        -Workspace Approach:
+            a.Single codebase with different workspaces for each environment
+            b.Environment-specific configuration controlled by variables
+            c.Works well for simpler setups but can be limiting for significantly different environments
+        
+        -Repository Approach:
+            a.Separate repositories for shared modules and each environment
+            b.Environment repos import modules from the shared modules repo
+            c.Useful for organizations with strict access control requirements
+
+
+What strategies would you use to minimize downtime during infrastructure updates?
+Explain the concept of provider aliases and when you'd use them.
+How do you handle dependencies between different Terraform projects?
+What are some limitations of Terraform and how would you work around them?
+How would you implement custom validation rules for your Terraform configurations?
+Explain how you would use Terraform to manage infrastructure across multiple cloud providers.
+How would you handle large-scale refactoring of Terraform code with minimal disruption?
+
+AWS-Specific Terraform Questions
+---------------------------------
+How would you provision an EKS cluster with Terraform?
+2.Explain how you would set up a multi-AZ infrastructure using Terraform.
+    - Define a VPC that spans multiple AZs
+    - Create multi-AZ resources where appropriate
+    - Implement Auto Scaling Groups that span multiple AZs
+    
+How would you handle IAM roles and policies with Terraform?
+What's your approach for creating VPCs and networking components in AWS using Terraform?
+How would you manage S3 bucket policies with Terraform?

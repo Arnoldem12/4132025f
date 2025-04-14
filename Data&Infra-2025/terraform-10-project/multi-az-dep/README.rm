@@ -1,0 +1,7 @@
+The key aspects of this approach are:
+
+Resources distributed across multiple AZs for high availability
+Using count or for_each with AZ lists to avoid hardcoding
+Enabling multi-AZ features for services that support it (like RDS)
+Load balancing across AZs
+Auto Scaling Groups spanning multiple AZs

@@ -1,0 +1,72 @@
+Python Interview Questions and Answers
+======================================
+
+1. What is Python, and what are its key features?
+-------------------------------------------------
+Python is an interpreted, high-level, general-purpose programming language known for its readability and versatility. Key features include:
+- Easy to learn and use
+- Interpreted language
+- Dynamically typed
+- Extensive standard libraries
+- Cross-platform compatibility
+
+2. What is the difference between a list and a tuple in Python?
+---------------------------------------------------------------
+- List:
+  - Mutable: Elements can be modified after creation.
+  - Defined using square brackets: my_list = [1, 2, 3]
+- Tuple:
+  - Immutable: Once created, elements cannot be changed.
+  - Defined using parentheses: my_tuple = (1, 2, 3)
+
+3. Explain the use of the __init__ method in Python classes.
+------------------------------------------------------------
+The __init__ method is the constructor in Python classes. It is automatically called when a new instance of the class is created, allowing initialization of the object's attributes.
+
+Example:
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+4. What are *args and **kwargs in Python functions?
+---------------------------------------------------
+- *args allows a function to accept any number of positional arguments, which are received as a tuple.
+- **kwargs allows a function to accept any number of keyword arguments, which are received as a dictionary.
+
+5. What is a lambda function in Python?
+---------------------------------------
+A lambda function is an anonymous function defined using the lambda keyword. It can have any number of arguments but only one expression.
+
+Example:
+add = lambda x, y: x + y
+
+6. How does Python manage memory?
+---------------------------------
+Python manages memory using a private heap containing all Python objects and data structures. The management includes:
+- Reference counting
+- Garbage collection for cyclic references
+
+7. What is the difference between deep copy and shallow copy?
+-------------------------------------------------------------
+- Shallow Copy: Creates a new object but inserts references into it to the objects found in the original.
+- Deep Copy: Creates a new object and recursively adds copies of nested objects found in the original.
+
+8. What is the Global Interpreter Lock (GIL) in Python?
+-------------------------------------------------------
+The Global Interpreter Lock (GIL) is a mutex that protects access to Python objects, preventing multiple native threads from executing Python bytecode simultaneously. This means that even in multi-threaded Python programs, only one thread executes Python code at a time.
+
+9. How are arguments passed in Python: by value or by reference?
+----------------------------------------------------------------
+In Python, arguments are passed by object reference:
+- Immutable objects (e.g., int, str): Behave like pass-by-value.
+- Mutable objects (e.g., list, dict): Behave like pass-by-reference.
+
+10. What are Python's key data types?
+-------------------------------------
+- Numeric types: int, float, complex
+- Sequence types: list, tuple, range
+- Text type: str
+- Set types: set, frozenset
+- Mapping type: dict
+- Boolean type: bool
+- Binary types: bytes, bytearray, memoryview

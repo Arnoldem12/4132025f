@@ -1,0 +1,11 @@
+# Ingest CSVs to S3 → trigger Lambda → load to DynamoDB
+# Tools: Terraform, S3, Lambda, DynamoDB
+
+# Flow: 
+1.Upload file to input/ in S3
+2.Lambda triggered → parses CSV → writes records to DynamoDB
+3.Terraform manages all infra
+
+resources:
+- aws_s3_bucket, aws_lambda_function, aws_dynamodb_table
+- EventBridge S3 triggers in Terraform

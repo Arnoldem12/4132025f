@@ -1,0 +1,16 @@
+#!/bin/bash
+for file in /data/*.csv; do
+    echo "Processing $file"
+    python process.py "$file"
+done
+
+# This script is a simple Bash script that processes all CSV files in a specified directory
+# This script loops through all CSV files in the /data directory and processes each file using a Python script named process.py
+# The script assumes that the process.py script is in the same directory as this script 
+# and that it takes a single argument, which is the path to the CSV file being processed
+# The script should be executable and have the necessary permissions set to run
+# Ensure that the /data directory exists and contains the CSV files to be processed
+# The script can be run manually or scheduled using a cron job to run at specific intervals
+# For example, to run the script every day at 2 AM, you can add the following line to your crontab:
+# 0 2 * * * /path/to/your_script.sh
+# This cron job runs the script every day at 2 AM

@@ -1,0 +1,63 @@
+Q: What is Delta Lake and why use it?
+A: It's an ACID-compliant format on top of Parquet, supports versioning, schema evolution, time travel.
+ACID (Atomicity, Consistency, Isolation, Durability): These are properties of database transactions that ensure data integrity and reliability.
+
+Q: How do you manage jobs in Databricks?
+A: Use Job Scheduler to automate notebooks or workflows; track with MLflow or job run history.
+1. What is Databricks, and how does it relate to Apache Spark?
+Databricks is a unified analytics platform built on top of Apache Spark. 
+It provides a collaborative environment for data engineers, data scientists, 
+and analysts to process and analyze large-scale data. Databricks simplifies 
+cluster management and integrates seamlessly with cloud storage solutions.​
+
+2. What are the main components of Databricks?
+- Workspace: Organizes notebooks, libraries, and dashboards.​
+- Clusters: Compute resources for executing code.​
+- Notebooks: Interactive environments supporting multiple languages.​
+- Databricks Community
+- Jobs: Schedules and runs automated workflows.​
+- Unity Catalog: Centralized governance for data and AI assets.​
+
+3. How does Databricks handle data storage?
+Databricks integrates with cloud storage services like AWS S3, 
+Azure Data Lake Storage, and Google Cloud Storage. It uses these services to read 
+and write data, enabling scalable and efficient data processing.​
+
+
+4. What is Delta Lake, and why is it important?
+Delta Lake is an open-source storage layer that brings ACID transactions 
+to Apache Spark and big data workloads. It ensures data reliability, 
+supports schema enforcement, and provides efficient data versioning and 
+time travel capabilities.​
+
+5. Explain the concept of RDDs in Spark.
+Resilient Distributed Datasets (RDDs) are the fundamental data structure in Spark. 
+They are immutable, distributed collections of objects that can be processed in parallel. 
+RDDs provide fault tolerance and allow for in-memory computing.​
+
+6. What are DataFrames and Datasets in Spark?
+DataFrames: Distributed collections of data organized into named columns, 
+similar to tables in relational databases.​
+
+Datasets: Typed, distributed collections of data that provide the benefits of 
+RDDs with the convenience of DataFrames.​
+
+7. How do you perform data transformation in Spark?
+Data transformation in Spark can be performed using operations like map, 
+filter, reduce, groupBy, and join. 
+These transformations can be applied to RDDs, DataFrames, and Datasets to manipulate data.​
+
+8. What is the Catalyst Optimizer in Spark?
+The Catalyst Optimizer is a query optimization framework in Spark SQL that automatically 
+optimizes the logical and physical execution plans to improve query performance.​
+
+9. Explain the concept of lazy evaluation in Spark.
+Lazy evaluation means that Spark does not immediately execute transformations on RDDs, 
+DataFrames, or Datasets. Instead, it builds a logical plan of the transformations and 
+only executes them when an action (like collect or save) is called. 
+This optimization reduces the number of passes over the data.​
+
+10. How do you manage Spark applications on Databricks clusters?
+Spark applications on Databricks clusters can be managed by configuring 
+clusters (choosing instance types, auto-scaling options), monitoring cluster performance, 
+and using Databricks job scheduling to automate workflows.​

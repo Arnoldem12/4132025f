@@ -1,0 +1,11 @@
+# Ingests monthly sales reports → clean with Glue → query in Athena
+# Tools: S3, Glue, Athena, Terraform
+
+#Flow:
+1.Files land in raw/ S3 bucket
+2.Glue job cleans data and saves to clean/ bucket
+3.Athena queryable via external table
+4.Terraform provisions all
+
+# Focus: IAM roles for Glue, 
+# aws_glue_catalog_database, aws_glue_job, aws_athena_database, aws_athena_table

@@ -1,0 +1,9 @@
+Use Case: Process IoT sensor data in near real-time
+
+Tools: Databricks (PySpark), Auto Loader, Delta Lake, Job Scheduler
+
+Flow:
+1.Sensor JSON data lands in S3
+2.Databricks Auto Loader ingests into Delta table
+3.Notebook cleans and aggregates
+4.Writes daily metrics to gold/ Delta table

@@ -1,0 +1,19 @@
+1.Ros roject: 
+    appflow
+    step functions
+    grab data from sf
+
+2.Attendance APP project, peoplesoft
+ 
+
+3.masking data
+
+
+4.Trade Data
+   SQL server to Glue
+
+5.DMS (getting stuff from onprem)
+
+
+Challenges: Null Resource
+lake formation (terraform)

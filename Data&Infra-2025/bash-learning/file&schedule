@@ -1,0 +1,10 @@
+#!/bin/bash
+TIMESTAMP=$(date +"%Y%m%d")
+cp /var/log/app.log /backup/app_$TIMESTAMP.log
+
+
+0 1 * * * /path/to/backup.sh
+# This cron job runs the backup.sh script every day at 1 AM
+# The script copies the app.log file to a backup directory with a timestamp in the filename
+# The backup directory should be created beforehand and have the necessary permissions set
+# Ensure the script is executable

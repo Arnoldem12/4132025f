@@ -1,0 +1,9 @@
+Use Case: Cluster customers based on behavior
+
+Tools: PySpark, Databricks MLlib, Delta Lake
+
+Flow:
+1.Load customer behavior data
+2.Run K-Means clustering model
+3.Store results in Delta table for BI use
+4.Deploy with MLflow tracking

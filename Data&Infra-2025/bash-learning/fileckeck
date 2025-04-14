@@ -1,0 +1,9 @@
+if [ -f "file.txt" ]; then
+  echo "Found file"
+fi
+# This script checks if a file named "file.txt" exists in the current directory
+# If the file exists, it prints "Found file" to the console
+
+# Q: What’s the difference between > and >>?
+# A: > overwrites a file, >> appends to it.
+
